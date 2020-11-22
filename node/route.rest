@@ -1,0 +1,26 @@
+GET http://localhost:3000/books
+###
+
+
+GET http://localhost:3000/books/5f8b10ff59fb5d07007daa98
+###
+
+
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+}
+###
+
+
+PUT http://localhost:3000/books/5f959e2ec0cb41427ccf7412
+Content-Type: application/json
+
+{
+}
+###
+
+
+DELETE http://localhost:3000/books/5f8b131359fb5d07007daa99
+###
