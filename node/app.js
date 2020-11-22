@@ -1,17 +1,21 @@
-require('dotenv').config()
-
+import loader from '~/loaders'
 const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
+async function startServer () {
+  const app = express()
 
-app.use(express.json())
+  await loader({ expressApp: app })
 
-const booksRouter = require('./routes/books')
-app.use('/books', booksRouter)
+  const booksRouter = require('./routes/books') // todo: move router somewhere else.
+  app.use('/books', booksRouter)
 
-app.listen(3000, () => console.log('Server Started'))
+  app.listen(process.env.PORT, err => {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log('Your server is ready !')
+  })
+}
+
+startServer()
