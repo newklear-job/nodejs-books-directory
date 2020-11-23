@@ -2,7 +2,7 @@ GET http://localhost:3000/books
 ###
 
 
-GET http://localhost:3000/books/5f8b10ff59fb5d07007daa98
+GET http://localhost:3000/books/5fbc1cd69a627535e0048e19
 ###
 
 
@@ -10,17 +10,25 @@ POST http://localhost:3000/books
 Content-Type: application/json
 
 {
+  "title": "Best book",
+  "content": "Really big and awesome book content here. Because it's best book written by Vitaliy!!!",
+  "publishedAt": "2020-11-23",
+  "author": "Vitaliy"
 }
 ###
 
 
-PUT http://localhost:3000/books/5f959e2ec0cb41427ccf7412
+PUT http://localhost:3000/books/5fbc1cd69a627535e0048e19
 Content-Type: application/json
 
 {
+  "title": "Best book updated",
+  "content": "Really big and awesome book content here. Because it's best book written by Vitaliy!!!",
+  "publishedAt": "2020-11-23",
+  "author": "Vitaliy"
 }
 ###
 
 
-DELETE http://localhost:3000/books/5f8b131359fb5d07007daa99
+DELETE http://localhost:3000/books/5fbc1cd69a627535e0048e19
 ###
