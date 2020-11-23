@@ -1,13 +1,15 @@
-const express = require('express')
-const router = express.Router()
+import { Router } from 'express'
+const router = Router()
 
-router.get('/', async (req, res) => {
-  try {
-    const users = 'hello world!'
-    res.json(users)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
+export default (app) => {
+  app.use('/books', router)
 
-module.exports = router
+  router.get('/', async (req, res) => {
+    try {
+      const users = 'hello world!'
+      res.json(users)
+    } catch (err) {
+      res.status(500).json({ message: err.message })
+    }
+  })
+}

@@ -6,9 +6,6 @@ async function startServer () {
 
   await loader({ expressApp: app })
 
-  const booksRouter = require('./routes/books') // todo: move router somewhere else.
-  app.use('/books', booksRouter)
-
   app.listen(process.env.PORT, err => {
     if (err) {
       console.log(err)
@@ -19,3 +16,8 @@ async function startServer () {
 }
 
 startServer()
+
+process.on('unhandledRejection', (error, promise) => {
+  console.log(' Oh Lord! We forgot to handle a promise rejection here: ', promise)
+  console.log(' The error was: ', error)
+})
