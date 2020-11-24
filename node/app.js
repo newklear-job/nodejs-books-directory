@@ -1,9 +1,9 @@
 import loader from '~/loaders'
 const express = require('express')
 
-async function startServer () {
-  const app = express()
+const app = express()
 
+async function startServer () {
   await loader({ expressApp: app })
 
   app.listen(process.env.PORT, err => {
@@ -21,3 +21,5 @@ process.on('unhandledRejection', (error, promise) => {
 })
 
 startServer()
+
+export { app } // for tests
