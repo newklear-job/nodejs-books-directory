@@ -1,6 +1,6 @@
-import '~/config/tests' // Attention! Sets test environment, which is used to change db connection.
 import { app } from '~/app'
-import { Book } from '~/models/book'
+
+import { connectDatabase, clearDatabase, closeDatabase } from '~/tests/db-handler'
 
 const chai = require('chai')
 const should = chai.should()
@@ -9,16 +9,18 @@ const chaiHttp = require('chai-http')
 chai.use(chaiHttp)
 
 describe('routes : books', () => {
-  beforeEach((done) => { // Before each test we empty the database
-    Book.deleteMany({}, (err) => {
-      console.error(err)
-    })
-    done()
+  before(async () => {
+    await connectDatabase()
+    console.log('before')
   })
 
-  afterEach((done) => {
+  afterEach(async () => {
+    await clearDatabase()
+    console.log('afterEach')
+  })
+  after(async () => {
+    await closeDatabase()
     console.log('after')
-    done()
   })
 
   describe('GET /books', () => {
