@@ -1,5 +1,5 @@
-import booksRouter from './books'
+import { router as booksRouter } from './books'
 
 export default async (expressApp) => {
-  booksRouter(expressApp)
+  expressApp.use('/books', booksRouter)
 }
