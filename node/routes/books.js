@@ -19,8 +19,8 @@ router.get('/:id', getBook, async (req, res) => {
 router.post('/', async (req, res) => {
   const book = new Book(req.body)
   try {
-    const newUser = await book.save()
-    res.status(201).json(newUser)
+    const newBook = await book.save()
+    res.status(201).json(newBook)
   } catch (err) {
     res.status(400).json({ message: err.message })
   }

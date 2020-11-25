@@ -6,7 +6,7 @@ const bookSchema = new Schema({
   title: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 2,
     maxlength: 20
   },
   content: {
@@ -18,7 +18,7 @@ const bookSchema = new Schema({
   author: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 2,
     maxlength: 20
   },
   publishedAt: {
