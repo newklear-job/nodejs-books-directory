@@ -25,6 +25,7 @@ describe('routes : books', () => {
 
   describe('GET /books', () => {
     it('should respond with all books', async () => {
+      await booksGenerator.generate(2)
       chai.request(app)
         .get('/books')
         .end((err, res) => {
@@ -32,10 +33,13 @@ describe('routes : books', () => {
           res.status.should.equal(200)
           res.type.should.equal('application/json')
           res.body.should.be.a('array')
-          res.body.length.should.eql(0)
-          // res.body[0].should.include.keys(
-          //   '_id', 'author', 'content', 'createdAt', 'publishedAt', 'title'
-          // )
+          res.body.length.should.eql(2)
+          res.body[0].should.include.keys(
+            '_id', 'author', 'content', 'createdAt', 'publishedAt', 'title'
+          )
+          res.body[1].should.include.keys(
+            '_id', 'author', 'content', 'createdAt', 'publishedAt', 'title'
+          )
         })
     })
   })
