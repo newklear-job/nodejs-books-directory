@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   env: {
+    es2021: true,
     node: true
   },
   extends: [
@@ -9,7 +10,7 @@ module.exports = {
     '@vue/typescript/recommended'
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2021
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
