@@ -1,9 +1,20 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <router-link to="/" class="navbar-brand">Books list</router-link>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <router-link to="/create" class="nav-link">Create book</router-link>
+      </li>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <router-view v-slot="slotProps">
+      <keep-alive max="5">
+        <component :is="slotProps.Component" :key="$route.fullPath"></component>
+      </keep-alive>
+    </router-view>
   </div>
-  <router-view/>
 </template>
 
 <style>
