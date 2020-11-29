@@ -3,7 +3,7 @@
     <router-link to="/" class="navbar-brand">Books list</router-link>
     <div class="navbar-nav mr-auto">
       <li class="nav-item">
-        <router-link to="/create" class="nav-link">Create book</router-link>
+        <router-link to="/books/create" class="nav-link">Create book</router-link>
       </li>
     </div>
   </nav>

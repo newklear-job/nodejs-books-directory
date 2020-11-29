@@ -14,7 +14,7 @@
       <h4>Tutorials List</h4>
       <ul class="list-group">
         <li class="list-group-item"
-            v-for="(tutorial, index) in [0,1,2]"
+            v-for="(book, index) in books"
             :key="index"
         >
           title
@@ -41,18 +41,35 @@
         <router-link :to="'/books/1/edit'" class="badge badge-warning">Edit</router-link>
       </div>
       <div>
-        <br />
-        <p>Please click on a Tutorial...</p>
+        <br/>
+        <p>Please click on a Tutorial... </p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import axios from 'axios'
 
 export default defineComponent({
-  name: 'BooksList'
+  setup () {
+    const books = ref([])
+    function getBooks () {
+      axios
+        .get('http://localhost:3000/books')
+        .then(response => {
+          books.value = response.data
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+
+    getBooks()
+
+    return { books }
+  }
 })
 </script>
 
