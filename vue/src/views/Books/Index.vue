@@ -1,6 +1,6 @@
 <template>
   <div class="list row">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search by title"/>
         <div class="input-group-append">
@@ -9,42 +9,40 @@
           </button>
         </div>
       </div>
+      <h4>Books List</h4>
+      <table>
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Created at</th>
+          <th>Published at</th>
+          <th>Controls</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(book, index) in books" :key="index">
+          <td>
+            {{ book.title }}
+          </td>
+          <td>
+            {{ book.author }}
+          </td>
+          <td>
+            {{ $filters.formatTime(book.createdAt) }}
+          </td>
+          <td>
+            {{ $filters.formatTime(book.publishedAt) }}
+          </td>
+          <td>
+            <router-link :to="`/books/${book._id}/edit`" class="badge badge-warning">Edit</router-link>
+            <button type="button" class="badge badge-danger">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="col-md-6">
-      <h4>Tutorials List</h4>
-      <ul class="list-group">
-        <li class="list-group-item"
-            v-for="(book, index) in books"
-            :key="index"
-        >
-          title
-        </li>
-      </ul>
 
-      <button class="m-3 btn btn-sm btn-danger">
-        Remove All
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div>
-        <h4>Tutorial</h4>
-        <div>
-          <label><strong>Title:</strong></label>
-        </div>
-        <div>
-          <label><strong>Description:</strong></label>
-        </div>
-        <div>
-          <label><strong>Status:</strong></label>
-        </div>
-
-        <router-link :to="'/books/1/edit'" class="badge badge-warning">Edit</router-link>
-      </div>
-      <div>
-        <br/>
-        <p>Please click on a Tutorial... </p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -55,6 +53,7 @@ import axios from 'axios'
 export default defineComponent({
   setup () {
     const books = ref([])
+
     function getBooks () {
       axios
         .get('http://localhost:3000/books')
@@ -67,16 +66,19 @@ export default defineComponent({
     }
 
     getBooks()
-
-    return { books }
+    const data: Array<string | number> = []
+    return { books, data }
   }
 })
 </script>
 
 <style>
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table {
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
 }
 </style>
