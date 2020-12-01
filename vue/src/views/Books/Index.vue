@@ -10,6 +10,7 @@
         </div>
       </div>
       <h4>Books List</h4>
+      <router-link to="/books/create" class="btn btn-warning">Create book</router-link>
       <table>
         <thead>
         <tr>
@@ -56,7 +57,7 @@ export default defineComponent({
 
     function getBooks () {
       axios
-        .get('http://localhost:3000/books')
+        .get(`${process.env.VUE_APP_API_DOMAIN}/books`)
         .then(response => {
           books.value = response.data
         })
