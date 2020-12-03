@@ -6,7 +6,7 @@
       class="form-control"
       id="title"
       required
-      v-model="bookUpdated.title"
+      v-model="bookForm.title"
     />
   </div>
 
@@ -16,35 +16,59 @@
       class="form-control"
       id="author"
       required
-      v-model="bookUpdated.author"
+      v-model="bookForm.author"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="content">Content</label>
+    <textarea
+      class="form-control"
+      id="content"
+      required
+      rows="6" cols="50"
+      v-model="bookForm.content"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="publishedAt">Published at</label>
+    <input
+      class="form-control"
+      id="publishedAt"
+      required
+      v-model="bookForm.publishedAt"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, computed, reactive } from 'vue'
+import { useStore } from '@/store'
 
 export default defineComponent({
-  props: {
-    bookToUpdate: {
-      type: Object,
-      required: false
+  setup () {
+    const store = useStore()
+
+    const bookForm = reactive({}) as any
+    for (const [key] of Object.entries(store.getters.bookForm)) {
+      bookForm[key] = computed({
+        get () {
+          return store.getters.bookForm[key]
+        },
+        set (value: string) {
+          store.commit('bookFormUpdateField', {
+            field: key,
+            value: value
+          })
+        }
+      })
     }
-  },
-  setup (props) {
-    const bookUpdated = reactive({
-      title: props?.bookToUpdate?.title,
-      author: props?.bookToUpdate?.author,
-      content: props?.bookToUpdate?.content,
-      createdAt: props?.bookToUpdate?.createdAt,
-      publishedAt: props?.bookToUpdate?.publishedAt
-    })
-    return { bookUpdated }
+    return { bookForm }
   }
 })
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

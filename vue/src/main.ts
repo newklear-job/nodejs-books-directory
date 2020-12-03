@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import moment from 'moment'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { store } from './store'
 
 const app = createApp(App as any).use(store).use(router)
 
