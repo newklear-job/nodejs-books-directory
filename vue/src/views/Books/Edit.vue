@@ -2,7 +2,7 @@
   <div class="edit-form">
     <BookForm></BookForm>
     <div>
-      <h4 v-if="feedback">Book created successfully!</h4>
+      <p v-if="feedback">{{ feedback }}</p>
       <router-link to="/books/" class="btn btn-warning">Back</router-link>
       <button class="btn btn-success" @click="update">Update</button>
     </div>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { useStore } from '@/store'
@@ -25,7 +25,6 @@ export default defineComponent({
     const route = useRoute()
     const bookId: string = route.params.id as string
 
-    const bookForm = computed(() => store.getters.bookForm)
     function getBook (id : string) {
       axios
         .get(`${process.env.VUE_APP_API_DOMAIN}/books/${id}`)
@@ -38,11 +37,22 @@ export default defineComponent({
     }
     getBook(bookId)
 
+    const bookForm = computed(() => store.getters.bookForm)
+    const feedback = ref < null | string >(null)
     function update () {
-      console.log(bookForm.value)
+      axios
+        .put(`${process.env.VUE_APP_API_DOMAIN}/books/${bookId}`, bookForm.value)
+        .then(response => {
+          store.commit('bookForm', response.data)
+          feedback.value = 'Updated!'
+        })
+        .catch(error => {
+          console.error(error)
+          feedback.value = error.response.data.message
+        })
     }
 
-    return { update }
+    return { update, feedback }
   }
 })
 </script>

@@ -5,8 +5,7 @@ export const state = {
     title: '',
     author: '',
     content: '',
-    publishedAt: '',
-    createdAt: ''
+    publishedAt: ''
   }
 }
 

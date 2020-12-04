@@ -3,5 +3,4 @@ export interface BookForm {
   author: string,
   content: string,
   publishedAt: string,
-  createdAt: string,
 }

@@ -2,7 +2,7 @@
   <div class="create-form">
     <BookForm></BookForm>
     <div>
-      <h4 v-if="feedback">Book created successfully!</h4>
+      <p v-if="feedback">{{ feedback }}</p>
       <router-link to="/books/" class="btn btn-warning">Back</router-link>
       <button class="btn btn-success" @click="create">Create</button>
     </div>
@@ -10,9 +10,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import BookForm from '@/components/Books/Form.vue'
 import { useStore } from '@/store'
+import axios from 'axios'
 
 export default defineComponent({
   components: {
@@ -22,10 +23,34 @@ export default defineComponent({
     const store = useStore()
 
     const bookForm = computed(() => store.getters.bookForm)
-    function create () {
-      console.log(bookForm.value)
+
+    function clearBookForm () {
+      store.commit('bookForm', {
+        title: '',
+        author: '',
+        content: '',
+        publishedAt: ''
+      })
     }
-    return { create }
+
+    clearBookForm()
+
+    const feedback = ref<null | string>(null)
+
+    function create () {
+      axios
+        .post(`${process.env.VUE_APP_API_DOMAIN}/books/`, bookForm.value)
+        .then(_response => {
+          clearBookForm()
+          feedback.value = 'Created!'
+        })
+        .catch(error => {
+          console.error(error)
+          feedback.value = error.response.data.message
+        })
+    }
+
+    return { create, feedback }
   }
 })
 </script>
