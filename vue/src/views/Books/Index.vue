@@ -1,14 +1,6 @@
 <template>
   <div class="list row">
     <div class="col-md-10">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by title"/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">
-            Search
-          </button>
-        </div>
-      </div>
       <h4>Books List</h4>
       <router-link to="/books/create" class="btn btn-warning">Create book</router-link>
       <table>
@@ -19,6 +11,13 @@
           <th>Created at</th>
           <th>Published at</th>
           <th>Controls</th>
+        </tr>
+        <tr>
+          <th><input v-model="filters.title" type="text" class="form-control" placeholder="Search by title"/></th>
+          <th><input v-model="filters.author" type="text" class="form-control" placeholder="Search by author"/></th>
+          <th><input v-model="filters.createdAt" type="text" class="form-control" placeholder="Search by created"/></th>
+          <th><input v-model="filters.publishedAt" type="text" class="form-control" placeholder="Search by created"/></th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +36,7 @@
           </td>
           <td>
             <router-link :to="`/books/${book._id}/edit`" class="badge badge-warning">Edit</router-link>
-            <button type="button" class="badge badge-danger">Delete</button>
+            <button @click="deleteBook(book._id)" type="button" class="badge badge-danger">Delete</button>
           </td>
         </tr>
         </tbody>
@@ -48,27 +47,58 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
+import _ from 'lodash'
 
 export default defineComponent({
   setup () {
+    /* get books */
     const books = ref([])
-
-    function getBooks () {
-      axios
-        .get(`${process.env.VUE_APP_API_DOMAIN}/books`)
+    const getBooks = _.throttle(() => {
+      axios.get(`${process.env.VUE_APP_API_DOMAIN}/books`, { params: filters })
         .then(response => {
           books.value = response.data
         })
         .catch(error => {
           console.error(error)
         })
-    }
-
+    }, 200)
     getBooks()
-    const data: Array<string | number> = []
-    return { books, data }
+    /* get books */
+
+    /* filters */
+    const route = useRoute()
+    const filters = reactive <any>({
+      title: route.query.title,
+      author: route.query.author,
+      createdAt: route.query.createdAt,
+      publishedAt: route.query.publishedAt
+    })
+    // const router = useRouter()
+
+    watch(filters, (filters) => {
+      const usedFilters = _.pickBy(filters, _.identity)
+
+      const urlSearchParams = new URLSearchParams(usedFilters)
+      history.pushState(null, '', `?${urlSearchParams.toString()}`)
+
+      getBooks()
+    })
+    /* filters */
+
+    function deleteBook (id : string) {
+      axios
+        .delete(`${process.env.VUE_APP_API_DOMAIN}/books/${id}`)
+        .then(_response => {
+          getBooks()
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+    return { books, filters, deleteBook }
   }
 })
 </script>

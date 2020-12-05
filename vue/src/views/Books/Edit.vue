@@ -4,6 +4,7 @@
     <div>
       <p v-if="feedback">{{ feedback }}</p>
       <router-link to="/books/" class="btn btn-warning">Back</router-link>
+<!--      <button class="btn btn-warning" @click="$router.go(-1)">Back</button>-->
       <button class="btn btn-success" @click="update">Update</button>
     </div>
   </div>
