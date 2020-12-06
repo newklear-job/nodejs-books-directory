@@ -11,7 +11,7 @@
   <div class="container mt-3">
     <router-view v-slot="slotProps">
       <keep-alive max="5">
-        <component :is="slotProps.Component" :key="$route.fullPath"></component>
+        <component :is="slotProps.Component" :key="$route.path"></component>
       </keep-alive>
     </router-view>
   </div>

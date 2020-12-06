@@ -3,7 +3,7 @@
     <BookForm></BookForm>
     <div>
       <p v-if="feedback">{{ feedback }}</p>
-      <router-link to="/books/" class="btn btn-warning">Back</router-link>
+      <router-link to="/books" class="btn btn-warning">Back</router-link>
       <button class="btn btn-success" @click="create">Create</button>
     </div>
   </div>

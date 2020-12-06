@@ -7,8 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/books'
   },
   {
-    path: '/books/',
-    alias: '/books',
+    path: '/books',
     name: 'BooksList',
     meta: { title: 'books' },
     component: Index
