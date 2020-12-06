@@ -36,7 +36,6 @@ export default defineComponent({
           console.error(error)
         })
     }
-    getBook(bookId)
 
     const bookForm = computed(() => store.getters.bookForm)
     const feedback = ref < null | string >(null)

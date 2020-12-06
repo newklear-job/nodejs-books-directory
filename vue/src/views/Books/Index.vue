@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, watch, onActivated } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import _ from 'lodash'
 
@@ -64,7 +64,7 @@ export default defineComponent({
         .catch(error => {
           console.error(error)
         })
-    }, 200)
+    }, 500)
     /* get books */
 
     /* filters */
@@ -75,14 +75,11 @@ export default defineComponent({
       createdAt: route.query.createdAt,
       publishedAt: route.query.publishedAt
     })
-    getBooks()
 
+    const router = useRouter()
     function updateQueryParams () {
       const usedFilters = _.pickBy(filters, _.identity)
-      const urlSearchParams = new URLSearchParams(usedFilters)
-      const queryParams = urlSearchParams.toString()
-
-      if (queryParams) { history.replaceState(history.state, '', `?${queryParams}`) }
+      router.push({ query: usedFilters })
     }
     watch(filters, () => {
       updateQueryParams()

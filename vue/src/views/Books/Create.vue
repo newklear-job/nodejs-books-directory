@@ -33,8 +33,6 @@ export default defineComponent({
       })
     }
 
-    clearBookForm()
-
     const feedback = ref<null | string>(null)
 
     function create () {
