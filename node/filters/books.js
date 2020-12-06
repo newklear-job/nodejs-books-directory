@@ -1,4 +1,5 @@
 import { Filter } from './index'
+import moment from 'moment'
 
 class BookFilter extends Filter {
   title (title) {
@@ -14,11 +15,19 @@ class BookFilter extends Filter {
   }
 
   publishedAt (publishedAt) {
-    return new Date(publishedAt)
+    const dateTime = moment.utc(publishedAt)
+    if (!dateTime.isValid()) {
+      throw Error('invalid date format')
+    }
+    return dateTime
   }
 
   createdAt (createdAt) {
-    return { $gte: new Date(createdAt) }
+    const dateTime = moment.utc(createdAt)
+    if (!dateTime.isValid()) {
+      throw Error('invalid date format')
+    }
+    return { $gte: dateTime }
   }
 }
 export { BookFilter }

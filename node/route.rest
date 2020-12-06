@@ -1,4 +1,4 @@
-GET http://localhost:3000/books?title=Best+b&author=Vitaliy&publishedAt=2020-11-23T00:00:00.000Z&createdAt=2020-11-24+12:52:41
+GET http://localhost:3000/books?title=Best+&author=Vitali&createdAt=2020-11-24+22:52:41&publishedAt=2020-11-23+00:00:00
 ###
 
 
