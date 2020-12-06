@@ -13,10 +13,10 @@
           <th>Controls</th>
         </tr>
         <tr>
-          <th><input v-model="filters.title" type="text" class="form-control" placeholder="Search by title"/></th>
-          <th><input v-model="filters.author" type="text" class="form-control" placeholder="Search by author"/></th>
-          <th><input v-model="filters.createdAt" type="text" class="form-control" placeholder="Search by created"/></th>
-          <th><input v-model="filters.publishedAt" type="text" class="form-control" placeholder="Search by created"/></th>
+          <th><label><input v-model="filters.title" type="text" class="form-control" placeholder="Search by title"/></label></th>
+          <th><label><input v-model="filters.author" type="text" class="form-control" placeholder="Search by author"/></label></th>
+          <th><label><input v-model="filters.createdAt" type="text" class="form-control" placeholder="Search by created"/></label></th>
+          <th><label><input v-model="filters.publishedAt" type="text" class="form-control" placeholder="Search by created"/></label></th>
           <th></th>
         </tr>
         </thead>
@@ -64,7 +64,7 @@ export default defineComponent({
         .catch(error => {
           console.error(error)
         })
-    }, 1)
+    }, 500)
     /* get books */
 
     /* filters */
