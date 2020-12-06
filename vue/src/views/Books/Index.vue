@@ -57,14 +57,14 @@ export default defineComponent({
     /* get books */
     const books = ref([])
     const getBooks = _.throttle(() => {
-      axios.get(`${process.env.VUE_APP_API_DOMAIN}/books`, { params: filters })
+      axios.get(`${process.env.VUE_APP_API_DOMAIN}/books`, { params: route.query })
         .then(response => {
           books.value = response.data
         })
         .catch(error => {
           console.error(error)
         })
-    }, 500)
+    }, 1)
     /* get books */
 
     /* filters */
@@ -79,15 +79,15 @@ export default defineComponent({
     const router = useRouter()
     function updateQueryParams () {
       const usedFilters = _.pickBy(filters, _.identity)
-      router.push({ query: usedFilters })
+      return router.push({ query: usedFilters })
     }
-    watch(filters, () => {
-      updateQueryParams()
+    watch(filters, async () => {
+      await updateQueryParams()
       getBooks()
     })
 
-    onActivated(() => {
-      updateQueryParams()
+    onActivated(async () => {
+      await updateQueryParams()
       getBooks()
     })
     /* filters */
