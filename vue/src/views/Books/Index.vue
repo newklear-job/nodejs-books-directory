@@ -64,7 +64,7 @@ export default defineComponent({
         .catch(error => {
           console.error(error)
         })
-    }, 500)
+    }, 1)
     /* get books */
 
     /* filters */
