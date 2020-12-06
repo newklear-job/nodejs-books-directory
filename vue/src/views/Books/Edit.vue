@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onActivated, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { useStore } from '@/store'
@@ -52,6 +52,10 @@ export default defineComponent({
           feedback.value = error.response.data.message
         })
     }
+
+    onActivated(() => {
+      getBook(bookId)
+    })
 
     return { update, feedback }
   }

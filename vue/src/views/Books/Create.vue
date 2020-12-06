@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onActivated, ref } from 'vue'
 import BookForm from '@/components/Books/Form.vue'
 import { useStore } from '@/store'
 import axios from 'axios'
@@ -49,6 +49,10 @@ export default defineComponent({
           feedback.value = error.response.data.message
         })
     }
+
+    onActivated(() => {
+      clearBookForm()
+    })
 
     return { create, feedback }
   }
