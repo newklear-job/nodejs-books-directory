@@ -1,11 +1,14 @@
 import { Book } from '~/models/book'
 import { getBook } from '~/middlewares/books'
 import { Router } from 'express'
+import { BookFilter } from '~/filters/books'
+
 const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const users = await Book.find()
+    const mongoQuery = new BookFilter(req.query).getQuery()
+    const users = await Book.find(mongoQuery)
     res.json(users)
   } catch (err) {
     res.status(500).json({ message: err.message })
